@@ -6,7 +6,7 @@
    		{% if jasalvo  %}
    			<span >Já está salvo!</span>
    		{% else %}
-   	 	<a href="personagens/salva/{{ personagem.id }}">
+   	 	<a href="personagens/salva/{{ personagem.id }}" onclick='document.getElementById("waitloader").style.display="block";'>
    			<span class='button ' >Salvar personagens</span>
    		</a>
    		{% endif %}
