@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Personagems Star Wars API!{% endblock %}</title>
+        <!--<link src="/build/app.css" rel="stylesheet"/>
+        <link src="/build/jquery.css" rel="stylesheet"/>-->
+		{{ encore_entry_link_tags('app') }}       
+         {{ encore_entry_script_tags('app') }}
+         {{ encore_entry_script_tags('jquery') }}
+        
+        {% block stylesheets %}{% endblock %}
+
+        
+        {% block javascripts %}{% endblock %}
+    </head>
+    <body>
+    	<div class='row'>
+    	</div>
+    	<div class='row'>
+			<div class='col s12 center-align'>			
+				<span class='button ' id='btn-consultar' onclick='location.href="/"'>Consultar personagens</span>
+				&nbsp;
+				<span class='button ' id='btn-listar' onclick='location.href="/personagens/"'>Ver personagens salvos</span>
+			</div>
+		</div>
+        {% block body %}{% endblock %}
+    </body>
+     {{ encore_entry_script_tags('materialize') }}
+</html>
