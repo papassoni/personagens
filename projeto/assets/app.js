@@ -9,6 +9,7 @@
 import './styles/app.css';
 //import './styles/jquery.css';
 import './styles/materialize.css';
+const $ = require('jquery');
 
 // start the Stimulus application
 //import './bootstrap';

@@ -22,7 +22,16 @@ Encore
      */
     .addEntry('app', './assets/app.js')
     .addEntry('jquery', './assets/jquery.js')
+    .addEntry('jquery-ui', './assets/jquery-ui.js')
     .addEntry('materialize', './assets/materialize.js')
+    .addEntry('personagens', './assets/personagens.js')
+
+    .autoProvidejQuery()
+    .autoProvideVariables({
+        $: 'jquery',
+        jQuery: 'jquery',
+        'window.jQuery': 'jquery',
+    })
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')

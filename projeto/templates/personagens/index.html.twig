@@ -1,37 +1,47 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Personagens index{% endblock %}
+{% block stylesheets %}
+    <style>
+        #btn-listar{
+            color:#FFF;
+            background-color:#33AA33;
+            cursor:default;
+        }
+    </style>
+    
+{% endblock %}
 
 {% block body %}
-    <h1>Personagens index</h1>
-
+    
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Nome</th>
-                <th>Detalhes</th>
-                <th>actions</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
             </tr>
         </thead>
         <tbody>
         {% for personagen in personagens %}
-            <tr>
-                <td>{{ personagen.id }}</td>
-                <td>{{ personagen.nome }}</td>
-                <td>{{ personagen.detalhes }}</td>
+            <tr>                
+                <td>{{ personagen.nome }}</td>                
                 <td>
-                    <a href="{{ path('personagens_show', {'id': personagen.id}) }}">show</a>
-                    <a href="{{ path('personagens_edit', {'id': personagen.id}) }}">edit</a>
+                    <a href="{{ path('personagens_show', {'id': personagen.id}) }}">Detalhes</a>             
+                </td>                
+                <td>
+                    {{ include('personagens/_delete_form.html.twig') }}       
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">Nenhum personagem salvo</td>
             </tr>
         {% endfor %}
+
+        
         </tbody>
     </table>
 
-    <a href="{{ path('personagens_new') }}">Create new</a>
+    
 {% endblock %}

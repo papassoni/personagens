@@ -3,28 +3,26 @@
 {% block title %}Personagens{% endblock %}
 
 {% block body %}
-    <h1>Personagens</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ personagen.id }}</td>
-            </tr>
-            <tr>
-                <th>Nome</th>
-                <td>{{ personagen.nome }}</td>
-            </tr>
-            <tr>
-                <th>Detalhes</th>
-                <td>{{ personagen.detalhes }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('personagens_index') }}">back to list</a>
-
-    <a href="{{ path('personagens_edit', {'id': personagen.id}) }}">edit</a>
-
+    
+    
+    <div class='row'>
+        <div class='col s6'>
+            <h5>{{ personagen.nome }}</h5>
+        </div>    
+    </div>
+    <hr></hr>
+    <div class='row'>
+        Informações:<br />
+        Altura:{{ personagem.height }}<br />
+        Peso:{{ personagem.mass}}<br />
+        Especie:{{ personagem.especies}}<br />
+    </div>
+    <div class='row'>
+        Filmes:<br />
+        {% for filme in  personagem.filmes %}
+            {{ filme.year }} - {{ filme.title }}<br />
+        {% endfor %}
+    </div>
+    
     {{ include('personagens/_delete_form.html.twig') }}
 {% endblock %}

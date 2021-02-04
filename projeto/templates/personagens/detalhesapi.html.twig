@@ -1,0 +1,28 @@
+<div class='row'>
+	<div class='col s6'>
+   		<h5>{{personagem.name}}</h5>
+   	</div>
+   	<div class='col s6'>
+   		{% if jasalvo  %}
+   			<span >Já está salvo!</span>
+   		{% else %}
+   	 	<a href="personagens/salva/{{ personagem.id }}">
+   			<span class='button ' >Salvar personagens</span>
+   		</a>
+   		{% endif %}
+   	</div>
+</div>
+<hr></hr>
+<div class='row'>
+	Informações:<br />
+	Altura:{{ personagem.height }}<br />
+	Peso:{{ personagem.mass}}<br />
+	Especie:{{ personagem.especies}}<br />
+</div>
+<div class='row'>
+	Filmes:<br />
+	{% for filme in  personagem.filmes %}
+		{{ filme.year }} - {{ filme.title }}<br />
+	{% endfor %}
+</div>
+   

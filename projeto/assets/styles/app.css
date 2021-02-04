@@ -19,3 +19,28 @@ span.button:hover, span.button.selected{
 }
 
 
+#waitloader{
+	position: absolute;
+	top:0px;
+	left:0px;
+	height:100%;
+	width:100%;
+	background-color:rgba(0,0,0,0.4);
+	text-align: center;
+	padding-top:150px;
+	display:none;
+}
+
+ul.ui-autocomplete{
+	background-color: #eee;
+	max-width: 250px;
+
+}
+
+.container{
+	width:90% !important;
+}
+
+.ui-helper-hidden-accessible{
+	display:none;
+}

@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\SWAPI\SwapiClient;
 
 /**
  * @Route("/personagens")
@@ -18,10 +19,15 @@ class PersonagensController extends AbstractController
     /**
      * @Route("/", name="personagens_index", methods={"GET"})
      */
+
     public function index(PersonagensRepository $personagensRepository): Response
     {
+        //$swapi = new SwapiClient();
+        //$pessoas = $swapi->getPeople(3);
+        //var_dump($pessoas->results);
         return $this->render('personagens/index.html.twig', [
-            'personagens' => $personagensRepository->findAll(),
+            'personagens' => $personagensRepository->findAll()
+           // 'pessoas' => $pessoas->results
         ]);
     }
 
@@ -48,6 +54,49 @@ class PersonagensController extends AbstractController
         ]);
     }
 
+
+    /**
+    * @Route("/busca", name="personagens_busca", methods={"GET", "POST"})
+    */
+
+    public function busca(Request $request): Response
+    {
+        $request->request->get('busca');
+
+        $swapi = new SwapiClient();
+        $nomes = $swapi->getAllPeoplesNames();
+        
+        $response = new Response(json_encode($nomes));
+        $response->headers->set('Content-Type', 'text/json');
+
+        return $response;
+    }
+
+    /**
+    * @Route("/detalhesapi", name="personagens_detalhesapi", methods={"GET", "POST"})
+    */
+    public function detalhesapi(Request $request): Response
+    {
+        $nome = $request->request->get('nome');
+
+        $swapi = new SwapiClient();
+        $personagem = $swapi->getPeopleByName($nome);
+        
+        $repository = $this->getDoctrine()->getRepository(Personagens::class);
+        $jasalvo = false;
+        $personagem_salvo = $repository->findOneBy(['nome'=>$nome]);
+        if($personagem_salvo){
+            $jasalvo = true;
+        }
+        
+        return $this->render('personagens/detalhesapi.html.twig', [
+            'personagem' => $personagem,
+            'jasalvo' => $jasalvo
+        ]);
+
+        return $response;
+    }
+
     /**
      * @Route("/{id}", name="personagens_show", methods={"GET"})
      */
@@ -55,7 +104,37 @@ class PersonagensController extends AbstractController
     {
         return $this->render('personagens/show.html.twig', [
             'personagen' => $personagen,
+            'personagem' => json_decode($personagen->getDetalhes())
         ]);
+    }
+
+     /**
+     * @Route("/salva/{id}", name="personagens_salva", methods={"GET"})
+     */
+    public function salva(int $id): Response
+    {
+        
+        $swapi = new SwapiClient();
+        $personagem = $swapi->getPeopleByid($id);
+        
+        
+        $repository = $this->getDoctrine()->getRepository(Personagens::class);
+
+        $personagem_salvo = $repository->findOneBy(['nome'=>$personagem->name]);
+
+        if(!$personagem_salvo){
+            $personagem_local = new Personagens();
+            $personagem_local->setNome($personagem->name);
+            $personagem_local->setDetalhes(json_encode($personagem));
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($personagem_local);
+            $entityManager->flush();    
+        }
+
+        
+
+        return $this->redirect('/personagens/');
     }
 
     /**
